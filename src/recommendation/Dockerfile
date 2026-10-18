@@ -4,13 +4,16 @@ WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 
-RUN pip install --upgrade pip
+#RUN pip install --upgrade pip
+#RUN pip install --upgrade pip setuptools
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir "setuptools<81"
 RUN pip install -r requirements.txt
 
 COPY . .
 
 RUN opentelemetry-bootstrap -a install 
 
-ENV RECOMMENDATION_PORT 1010
+ENV RECOMMENDATION_PORT=1010
 
 ENTRYPOINT ["python", "recommendation_server.py"]
